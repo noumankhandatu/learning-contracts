@@ -1,14 +1,33 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
 
 import Loader from "./Loader";
+async function getAccount() {
+  const accounts = await window.ethereum.request({
+    method: "eth_requestAccounts",
+  });
+  const account = accounts[0];
+
+  return account;
+}
 
 const Welcome = () => {
   // wallet button
+  const [accountAddress, setAccountAddress] = useState("");
   const connectWallet = () => {
-    alert("connect wallet");
+    console.log(window);
+    if (
+      typeof window !== "undefined" &&
+      typeof window.ethereum !== "undefined"
+    ) {
+      getAccount().then((response) => {
+        setAccountAddress(response);
+      });
+    } else {
+      console.log("error");
+    }
   };
 
   // form on change function
@@ -41,7 +60,9 @@ const Welcome = () => {
             className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
           >
             <AiFillPlayCircle className="text-white mr-2" />
-            <p className="text-white text-base font-semibold">Connect Wallet</p>
+            <p className="text-white text-base font-semibold">
+              {!!accountAddress ? accountAddress : "Connect Button"}
+            </p>
           </button>
           {false && (
             <button
