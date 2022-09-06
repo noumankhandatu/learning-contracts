@@ -15,7 +15,13 @@ const Navbar = () => {
   return (
     <nav className="w-full flex md:justify-center justify-between items-center p-4">
       <div className="md:flex-[0.5] flex-initial justify-center items-center">
-        <img src={'https://admin.nft-stats.com/assets/233e6323-1d76-46f0-8324-a2e4f8420b23?width=600&height=600&fit=inside'} alt="logo" className="w-32 cursor-pointer" />
+        <img
+          src={
+            "https://admin.nft-stats.com/assets/233e6323-1d76-46f0-8324-a2e4f8420b23?width=600&height=600&fit=inside"
+          }
+          alt="logo"
+          className="w-32 cursor-pointer"
+        />
       </div>
       <ul className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
         {["Market", "Exchange", "Tutorials", "Wallets"].map((item, index) => (

@@ -88,6 +88,7 @@ const WalletChecker = () => {
       );
 
       setLoading(true);
+      console.log(transactionHash, "hey my hash is here");
       console.log(`loading - ${transactionHash.hash}`);
       await transactionHash.wait();
       setLoading(false);
