@@ -92,7 +92,7 @@ const WalletChecker = () => {
       await transactionHash.wait();
       setLoading(false);
       console.log(`success - ${transactionHash.hash}`);
-// smart contract getTransactionCount
+      // smart contract getTransactionCount
       const transactionCount = await transactionsContract.getTransactionCount();
       setTransactionCount(transactionCount.toNumber());
     } catch (error) {
@@ -107,7 +107,7 @@ const WalletChecker = () => {
     // transactions function been sent
     dispatch(getTransactionFn(sendTransaction));
   }, []);
-  return <div>WalletChecker</div>;
+  return <div></div>;
 };
 
 export default WalletChecker;
