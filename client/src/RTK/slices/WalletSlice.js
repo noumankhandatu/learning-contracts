@@ -4,37 +4,38 @@ const initialState = {
   connectFn: [],
   // account details
   checkingWalletConnection: {
-    accountId: "",
+    accountId: null,
     accountConnect: "",
   },
-  formData: [],
   TransactionFun: [],
+  formData: [],
+  allTransactions: [],
 };
 
 export const WalletSlice = createSlice({
   name: "counter",
   initialState,
   reducers: {
-    walletFnFetcher: (state, { payload }) => {
-      state.connectFn = payload;
-    },
     checkingWalletConnectedData: (state, { payload }) => {
       state.checkingWalletConnection.accountId = payload;
     },
-    formDataFetching: (state, { payload }) => {
+    getFormDataAction: (state, { payload }) => {
       state.formData = payload;
     },
     getTransactionFn: (state, { payload }) => {
       state.TransactionFun = payload;
     },
+    getAllTransactionsAction: (state, { payload }) => {
+      state.allTransactions = payload;
+    },
   },
 });
 
 export const {
-  walletFnFetcher,
-  formDataFetching,
   checkingWalletConnectedData,
+  getFormDataAction,
   getTransactionFn,
+  getAllTransactionsAction,
 } = WalletSlice.actions;
 
 export default WalletSlice.reducer;

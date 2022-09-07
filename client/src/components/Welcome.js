@@ -3,22 +3,20 @@ import { AiFillPlayCircle } from "react-icons/ai";
 import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
 import Loader from "./Loader";
-import { formDataFetching } from "../RTK/slices/WalletSlice";
+import { connectWalletAction } from "../RTK/slices/ConnectWalletSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { getFormDataAction } from "../RTK/slices/WalletSlice";
 const Welcome = () => {
   const dispatch = useDispatch();
-  // connect function is fetched here
-  const connectWallet = useSelector((state) => state.WalletSlice.connectFn);
-  // account Id fetched Here
+  //()=> connecting to wallet here
+  const handleConnectionToWallet = () => {
+    dispatch(connectWalletAction());
+  };
+  //()=> got metmask id here
   const accountId = useSelector(
-    (state) => state.WalletSlice.checkingWalletConnection.accountId
+    (state) => state.ConnectionOfWalletReducer.connectFn
   );
-  // sendTransaction fn fetched
-  const sendTransaction = useSelector(
-    (state) => state.WalletSlice.TransactionFun
-  );
-  // form data grabbed
-  const fd = useSelector((state) => state.WalletSlice.formData);
+
   // input data
   const [formData, setFormData] = useState({
     addressTo: "",
@@ -34,15 +32,18 @@ const Welcome = () => {
     }));
   };
   // form send button
+
   const handleSubmit = (e) => {
+    dispatch(getFormDataAction(formData));
     const { addressTo, amount, keyword, message } = formData;
     if (!addressTo || !amount || !keyword || !message) return;
-    alert("info sended");
-    dispatch(formDataFetching(formData));
     e.preventDefault();
     sendTransaction();
+    alert("info sended");
   };
-
+  const sendTransaction = useSelector(
+    (state) => state.WalletSlice.TransactionFun
+  );
   // just common styles
   const companyCommonStyles =
     "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";
@@ -58,11 +59,10 @@ const Welcome = () => {
             Hey im better than sofia robot i can send money but she cant jokes
             apart lol
           </p>
-
-          {!accountId && (
+          {accountId ? null : (
             <button
               type="button"
-              onClick={connectWallet}
+              onClick={handleConnectionToWallet}
               className="flex flex-row justify-center items-center my-5 bg-[#e7ab06] p-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
             >
               <AiFillPlayCircle className="text-white mr-2" />
@@ -71,6 +71,7 @@ const Welcome = () => {
               </p>
             </button>
           )}
+
           {/* Just UI */}
           <div className="grid sm:grid-cols-3 grid-cols-2 w-full mt-10">
             <div className={`rounded-tl-2xl ${companyCommonStyles}`}>
@@ -159,7 +160,6 @@ const Welcome = () => {
 };
 
 export default Welcome;
-// used Components
 
 const Input = ({ placeholder, name, type, value, handleChange }) => (
   <input
@@ -171,24 +171,3 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
     className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
   />
 );
-// const [accountAddress, setAccountAddress] = useState("");
-// console.log(window);
-// if (
-//   typeof window !== "undefined" &&
-//   typeof window.ethereum !== "undefined"
-// ) {
-//   getAccount().then((response) => {
-//     setAccountAddress(response);
-//   });
-// } else {
-//   console.log("error");
-// }
-
-// async function getAccount() {
-//   const accounts = await window.ethereum.request({
-//     method: "eth_requestAccounts",
-//   });
-//   const account = accounts[0];
-
-//   return account;
-// }

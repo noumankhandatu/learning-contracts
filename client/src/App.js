@@ -13,8 +13,8 @@ function App() {
         <Welcome />
         <WalletChecker />
       </div>
-      {/* <Services />
-      <Transactions /> */}
+      <Services />
+      <Transactions />
       <Footer />
     </div>
   );
